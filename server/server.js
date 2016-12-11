@@ -3,7 +3,7 @@ import runner, { RunnerFormat } from './runner';
 // it eats this format
 const example = new RunnerFormat({
   initialize(io) {
-  	this.io = io;
+    this.io = io;
     console.log('Initialized socket io');
   },
   handshake(socket, data) {

@@ -23,59 +23,62 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 
 // session storage - for passport
 const basicAuthConfig = {
-  key:    'express.sid',
+  key:  'express.sid',
   secret: 'Jacek Pietal',
-  store:  new MongoDBStore(config.mongoDBStore)  
+  store: new MongoDBStore(config.mongoDBStore)  
 };
 
-export default function runner(plugins = {}) {
+export default function runner(plugins = {}, custom = (app) => {}) {
 
-	const app = express();
+  const app = express();
 
-	// view engine
-	app.engine('html', ejs.renderFile);
-	app.set('view engine', 'html');
-	app.set('views', path.join(__dirname, '..', 'dist'));
+  // view engine
+  app.engine('html', ejs.renderFile);
+  app.set('view engine', 'html');
+  app.set('views', path.join(__dirname, '..', 'dist'));
 
-	// compression
-	app.use(compression());
+  // compression
+  app.use(compression());
 
-	// for passport
-	app.use(bodyParser.json());
-	app.use(bodyParser.urlencoded({ extended: false }));
-	app.use(cookieParser());
-	app.use(session(Object.assign(basicAuthConfig, {
-	  saveUninitialized: false,
-	  resave: false
-	})));
-	app.use(passport.initialize());
-	app.use(passport.session());
+  // for passport
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(cookieParser());
+  app.use(session(Object.assign(basicAuthConfig, {
+    saveUninitialized: false,
+    resave: false
+  })));
+  app.use(passport.initialize());
+  app.use(passport.session());
 
-	// cors, rest
-	app.use((req, res, next) => {
-	 res.header('Access-Control-Allow-Origin', '*');
-	 res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-	 res.header('Access-Control-Allow-Methods', 'OPTIONS,GET,PUT,POST,DELETE');
-	 next();
-	});
+  // cors, rest
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'OPTIONS,GET,PUT,POST,DELETE');
+    next();
+  });
 
-	// frontend cache
-	app.use(express.static(path.join(__dirname, '..', 'dist'), { 
-	  redirect: false, 
-	  maxAge: 86400000, /* one day */
-	}));
+  // frontend cache
+  app.use(express.static(path.join(__dirname, '..', 'dist'), { 
+    redirect: false, 
+    maxAge: 86400000, /* one day */
+  }));
 
-	// for passport
-	app.use(bodyParser.json());
-	app.use(bodyParser.urlencoded({ extended: false }));
-	app.use(cookieParser());
+  // for passport
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(cookieParser());
 
-	// fallback
-	app.use((req, res) => {
-	  res.render('index'); 
-	});
+  // extend
+  custom(app);
 
-	return createServer(app, plugins);
+  // fallback
+  app.use((req, res) => {
+    res.render('index'); 
+  });
+
+  return createServer(app, plugins);
 
 }
 
@@ -117,7 +120,7 @@ function createServer (app, plugins) {
   return { io, server }; 
 }
 
-function onAuthorizeFail (data, message, error, accept) {
+function onAuthorizeFail(data, message, error, accept) {
   // error indicates whether the fail is due to an error or just a unauthorized client
   if(error) {
     throw new Error(message);
@@ -127,7 +130,17 @@ function onAuthorizeFail (data, message, error, accept) {
   }
 }
 
-export function RunnerFormat ({ initialize, handshake }) {
-  this.initialize = initialize.bind(this);
-  this.handshake = handshake.bind(this);
+export class RunnerFormat {
+  constructor({ initialize, handshake }) {
+    this.onInitialize = initialize.bind(this);
+    this.handshake = handshake.bind(this);
+  }
+  initialize(io) {
+    if (this.initialized) {
+      throw new Error('runner.js: Already initialized!');
+    } else {
+      this.initialized = true;
+      this.onInitialize(io);
+    }
+  }
 };
