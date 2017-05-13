@@ -1,6 +1,6 @@
 This is a lazy connector for multiple apps on same socket port
 
-```bash
+```javascript
 'use strict';
 
 const run = require('socket-starter');

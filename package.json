@@ -1,8 +1,8 @@
 {
   "name": "socket-starter",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "license": "MIT",
-  "description": "Base runner project",
+  "description": "scalable app runner for multiple apps on same socket port",
   "author": "Jacek Piętal <prozi85@gmail.com>",
   "private": false,
   "main": "lib/index.js",
@@ -22,7 +22,6 @@
     "html": "^1.0.0",
     "mongoose": "^4.9.8",
     "passport": "^0.3.2",
-    "session-file-store": "^1.0.0",
     "socket.io": "^2.0.1",
     "sticky-cluster": "^0.3.1"
   },
@@ -33,5 +32,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Prozi/socket-starter"
-  }
+  },
+  "keywords": [
+    "express",
+    "mongodb",
+    "cluster",
+    "socket.io",
+    "passport",
+    "same port"
+  ]
 }
