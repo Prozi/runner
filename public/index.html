@@ -8,18 +8,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
     <script>
       (function () {
+        var APP_NAME = 'chat';
         var socket = io();
         var messages = document.getElementById('messages');
         function addMessage (message) {
           messages.innerHTML += '<li>' + message + '</li>';
         }
-        socket.on('handshaken:example', function (data) {
+        socket.on('handshaken:' + APP_NAME, function (data) {
           addMessage('handshaken:' + JSON.stringify(data, null, 2));
         });
         socket.on('joined', function (data) {
           addMessage('joined:' + JSON.stringify(data, null, 2));
         });
-        socket.emit('handshake:example', { example: 'data for server' });
+        socket.emit('handshake:' + APP_NAME, { example: 'data for server' });
       })();
     </script>
   </body>
