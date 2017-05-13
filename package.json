@@ -1,12 +1,13 @@
 {
   "name": "socket-starter",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Base runner project",
   "author": "Jacek Piętal <prozi85@gmail.com>",
   "private": false,
+  "main": "lib/index.js",
   "scripts": {
     "test": "node example",
-    "lint": "eslint server"
+    "lint": "eslint lib"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
