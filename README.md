@@ -1,17 +1,28 @@
 This is a lazy connector for multiple apps on same socket port
 
 ```bash
-npm install yarn -g
+'use strict';
 
-vi server/config.json
+const run = require('socket-starter');
+const config = require('./config.json');
+const chat = require('./chat');
+const plugins = {
+	chat
+};
 
-yarn install
+run({
+    config,
+    plugins,
+    extend
+});
 
-yarn start
+function extend (app) {
+    app.use('/', require('./routes'));
+}
 ```
 
-add into server.js
+see example/index.js for more details
 
-modules in format
+modules (for example chat) are in format:
 
 { initialize(io), handshake(socket, data) }

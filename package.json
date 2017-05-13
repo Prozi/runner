@@ -1,6 +1,6 @@
 {
   "name": "socket-starter",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "license": "MIT",
   "description": "Base runner project",
   "author": "Jacek Piętal <prozi85@gmail.com>",
@@ -29,5 +29,9 @@
   "engines": {
     "node": ">= 6.2.2",
     "npm": ">= 3.9.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Prozi/socket-starter"
   }
 }
