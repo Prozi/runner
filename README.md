@@ -2,6 +2,8 @@
 
 ### socket.io 2 + express 4 + nodejs cluster + passport mongodb auth
 
+npm install socket-starter --save
+
 ## APP TEMPLATE:
 
 chat.js
@@ -28,7 +30,7 @@ index.js
 ```javascript
 'use strict';
 
-const run = require('../lib');
+const run = require('socket-starter');
 const config = require('./config');
 const chat = require('./chat');
 const plugins = {
