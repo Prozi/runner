@@ -1,8 +1,8 @@
 {
   "name": "socket-starter",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "license": "MIT",
-  "description": "scalable app runner for multiple apps on same socket port",
+  "description": "socket.io 2 + express 4 + nodejs cluster + passport mongodb auth",
   "author": "Jacek Piętal <prozi85@gmail.com>",
   "private": false,
   "main": "lib/index.js",
