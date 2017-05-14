@@ -1,6 +1,6 @@
 {
   "name": "socket-starter",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "license": "MIT",
   "description": "scalable app runner for multiple apps on same socket port",
   "author": "Jacek Piętal <prozi85@gmail.com>",
