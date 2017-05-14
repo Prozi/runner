@@ -73,6 +73,53 @@ config.json
 see [example folder](https://github.com/Prozi/socket-starter/tree/master/example)
 
 
-modules (for example chat) are in format:
+### modules (for example chat) are in format:
 
-{ initialize(io), handshake(socket, data) }
+```javascript
+{ 
+    initialize(io), 
+    handshake(socket, data)
+}
+```
+
+### the `const run = require('socket-starter');`
+
+it returns a function, that takes one parameter: `options`
+
+### options
+
+```javascript
+{
+    config,  // example see example/config.json
+    plugins, // example see example/chat.js
+    extend = (app) => {}
+}
+```
+
+the config is a json for express, mongodb, public static directories, etc.
+
+### extend
+
+the extend function is what you need to extend `express()` with
+
+example:
+```javascript
+const routes = require('./routes');
+
+run({
+    config,
+    plugins,
+    extend
+});
+
+function extend (app) {
+    app.use('/', routes);
+}
+```
+
+have fun, please open any issues, etc.
+
+- Jacek Pietal
+
+LICENSE: MIT do what you want, fork, etc.
+

@@ -1,6 +1,6 @@
 {
   "name": "socket-starter",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "license": "MIT",
   "description": "socket.io 2 + express 4 + nodejs cluster + passport mongodb auth",
   "author": "Jacek Piętal <prozi85@gmail.com>",
