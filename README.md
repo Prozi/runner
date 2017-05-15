@@ -20,7 +20,7 @@ index.html
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO Simplest Front End Example For Demonstration of Runner.js</title>
+    <title>Socket.IO Simplest Front End Example For Demonstration of Socket-Starter</title>
   </head>
   <body>
     <ul id="messages"></ul>
@@ -58,7 +58,7 @@ module.exports = {
     },
     handshake(socket, data) {
         console.log('Handshaken socket', socket.id, data);
-        socket.emit('handshaken:example', {
+        socket.emit('handshaken:chat', {
             example: 'data from server'
         });
         this.io.emit('joined', socket.id);
@@ -100,6 +100,7 @@ config.json
         "url": "mongodb://localhost:27017/test",
         "collection": "mySessions"
     },
+    "workers": 1,
     "static": {
         "config": {
             "redirect": false,
