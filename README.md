@@ -8,8 +8,12 @@
 
 to run below example you can:
 
-`cd node_modules/socket-starter`
-`npm run test`
+```bash
+cd node_modules/socket-starter
+npm run test
+```
+
+----
 
 index.html
 ```html
