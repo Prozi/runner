@@ -2,9 +2,45 @@
 
 ### socket.io 2 + express 4 + nodejs cluster + passport mongodb auth
 
-npm install socket-starter --save
+`npm install socket-starter --save`
 
-## APP TEMPLATE:
+## APP EXAMPLE:
+
+to run below example you can:
+
+`cd node_modules/socket-starter`
+`npm run test`
+
+index.html
+```html
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO Simplest Front End Example For Demonstration of Runner.js</title>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
+    <script>
+      (function () {
+        var APP_NAME = 'chat';
+        var socket = io();
+        var messages = document.getElementById('messages');
+        function addMessage (message) {
+          messages.innerHTML += '<li>' + message + '</li>';
+        }
+        socket.on('handshaken:' + APP_NAME, function (data) {
+          addMessage('handshaken:' + JSON.stringify(data, null, 2));
+        });
+        socket.on('joined', function (data) {
+          addMessage('joined:' + JSON.stringify(data, null, 2));
+        });
+        socket.emit('handshake:' + APP_NAME, { example: 'data for server' });
+      })();
+    </script>
+  </body>
+</html>
+```
 
 chat.js
 ```javascript
@@ -95,6 +131,18 @@ it returns a function, that takes one parameter: `options`
     extend = (app) => {}
 }
 ```
+
+### config
+
+this is the app's configuration, see that it has filled all fields from example/config.json
+
+### plugins
+
+Core concept:
+
+the whole idea is that you can start few 'plugins' that are socket.io apps on single port
+this is thanks to handshake function that joins a specific room for that socket, 
+and that app 'plugin' has it's IO instance bound to this room. see source, you'll see what I mean.
 
 the config is a json for express, mongodb, public static directories, etc.
 

@@ -8,7 +8,7 @@ module.exports = {
     },
     handshake(socket, data) {
         console.log('Handshaken socket', socket.id, data);
-        socket.emit('handshaken:example', {
+        socket.emit('handshaken:chat', {
             example: 'data from server'
         });
         this.io.emit('joined', socket.id);
