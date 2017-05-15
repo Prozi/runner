@@ -4,10 +4,10 @@ const run = require('../lib');
 const config = require('./config');
 const chat = require('./chat');
 const plugins = {
-    chat
+  chat
 };
 
 run({
-    config,
-    plugins
+  config,
+  plugins
 });
