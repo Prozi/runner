@@ -19,10 +19,6 @@ module.exports = function run({
   const MongoStore = require('connect-mongo')(expressSession);
   const sticky = require('sticky-session');
   const stamp = require('console-stamp');
-  const mongoose = require('mongoose');
-
-  mongoose.Promise = global.Promise;
-  mongoose.createConnection(config.store.url);
 
   const app = express();
   const port = process.env.PORT || 3000;
@@ -37,7 +33,7 @@ module.exports = function run({
   });
 
   stamp(console, {
-    metadata,
+    metadata: config.metadata ? metadata : null,
     colors: config.colors || {}
   });
 

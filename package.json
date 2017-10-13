@@ -1,6 +1,6 @@
 {
   "name": "socket-starter",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "license": "MIT",
   "description": "socket.io 2 + express 4 + nodejs cluster + passport mongodb auth (compatible with node8)",
   "author": "Jacek Piętal <prozi85@gmail.com>",
@@ -23,7 +23,6 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "html": "^1.0.0",
-    "mongoose": "^4.12.1",
     "passport": "^0.4.0",
     "socket.io": "^2.0.3",
     "sticky-session": "^1.1.2"
