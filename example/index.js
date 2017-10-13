@@ -1,6 +1,6 @@
 'use strict';
 
-const run = require('../lib');
+const run = require('..');
 const config = require('./config');
 const chat = require('./chat');
 const plugins = {

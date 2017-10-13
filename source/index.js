@@ -1,9 +1,9 @@
 'use strict';
 
-function run({
-    config = {},
-    plugins = {},
-    extend = null
+module.exports = function run({
+  config = {},
+  plugins = {},
+  extend = null
 }) {
 
   const express = require('express');
@@ -86,7 +86,7 @@ function run({
 
   io.on('connect', (socket) => {
     console.info('[socket] connect', socket.id);
-      // require custom handshake
+    // require custom handshake
     Object.keys(plugins).forEach((name) => {
       socket.on(`handshake:${name}`, (data) => {
         socket.join(name);
@@ -105,8 +105,4 @@ function run({
 
   return sticky.listen(server, port, { workers: config.workers });
 
-}
-
-if (typeof module !== 'undefined') {
-  module.exports = run;
-}
+};
