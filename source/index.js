@@ -77,6 +77,7 @@ module.exports = function run({
 
   // socket-passport integration
   io.use(passportSocketIo.authorize({
+    cookieParser: cookieParser.bind(null, config.auth.secret),
     key: config.auth.key,
     secret: config.auth.secret,
     store
