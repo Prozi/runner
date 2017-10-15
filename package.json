@@ -1,6 +1,6 @@
 {
   "name": "socket-starter",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "license": "MIT",
   "description": "socket.io 2 + express 4 + nodejs cluster + passport mongodb auth (compatible with node8)",
   "author": "Jacek Piętal <prozi85@gmail.com>",
@@ -9,7 +9,7 @@
   "scripts": {
     "test": "node ./example",
     "lint": "eslint ./source",
-    "compile": "babel ./source --out-dir ./es2015 --presets es2015",
+    "compile": "./node_modules/.bin/babel ./source --out-dir ./es2015 --presets es2015",
     "postinstall": "yarn compile"
   },
   "dependencies": {
