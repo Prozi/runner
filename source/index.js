@@ -27,6 +27,7 @@ module.exports = function run({
   const session = expressSession({
     key: config.auth.key || 'express.sid',
     secret: config.auth.secret,
+    cookie: config.auth.cookie,
     resave: true,
     saveUninitialized: true,
     store
