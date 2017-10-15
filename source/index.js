@@ -6,6 +6,7 @@ module.exports = function run({
   extend = null
 }) {
 
+  const passportSocketIo = require('passport.socketio');
   const express = require('express');
   const expressSession = require('express-session');
   const bodyParser = require('body-parser');
@@ -75,7 +76,12 @@ module.exports = function run({
   io.set('origins', '*:*');
 
   // socket-passport integration
-  io.use((socket, next) => session(socket.request, socket.request.res, next));
+  io.use(passportSocketIo.authorize({
+    cookieParser: cookie,
+    key: config.auth.key,
+    secret: config.auth.secret,
+    store
+  }));
 
   Object.keys(plugins).forEach((name) => {
     plugins[name].initialize(io.in(name));
