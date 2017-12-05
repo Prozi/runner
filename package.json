@@ -17,21 +17,20 @@
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
     "connect-mongo": "^2.0.0",
-    "console-stamp": "^0.2.5",
+    "console-stamp": "^0.2.6",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "editions": "^1.3.3",
-    "eslint": "^4.9.0",
+    "eslint": "^4.12.1",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "html": "^1.0.0",
     "passport": "^0.4.0",
     "passport.socketio": "^3.7.0",
-    "socket.io": "^2.0.3",
+    "socket.io": "^2.0.4",
     "sticky-session": "^1.1.2"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/Prozi/socket-starter"
