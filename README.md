@@ -1,6 +1,6 @@
 # STARTER FOR APPS
 
-### socket.io 2 + express 4 + nodejs cluster + passport mongodb auth
+### socket.io 2 + express 4 + nodejs cluster
 
 `npm install socket-starter --save`
 
