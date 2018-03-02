@@ -1,0 +1,21 @@
+{
+  "auth": {
+    "key": "prozi85",
+    "secret": "socket-starter"
+  },
+  "metadata": true,
+  "colors": {
+    "stamp": "yellow",
+    "label": "white",
+    "metadata": "green"
+  },
+  "store": {
+    "url": "mongodb://heroku_d5551zgk:tlgqe8338ea9rttj9qblqqd86d@ds155218.mlab.com:55218/heroku_d5551zgk",
+    "collection": "sessions"
+  },
+  "debug": false,
+  "workers": 1,
+  "static": {
+    "directories": ["public"]
+  }
+}
