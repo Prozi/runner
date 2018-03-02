@@ -101,8 +101,6 @@ function createApp (config) {
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: false }))
 
-  app.set('view engine', 'html')
-
   config.static.directories.forEach((directory) => {
     app.use(express.static(path.resolve(directory), config.static.config))
   })

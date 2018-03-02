@@ -34,7 +34,6 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "farmhash": "^2.0.5",
-    "html": "^1.0.0",
     "socket.io": "^2.0.4"
   },
   "repository": {
