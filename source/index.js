@@ -66,7 +66,7 @@ function main ({ config = {}, plugins = {}, extend = null }) {
     if (extend) {
       extend(app)
     }
-    return createIO(app, plugins)
+    return createIO(app, plugins, config)
   }
 }
 
@@ -109,12 +109,12 @@ function createApp (config) {
 }
 
 // Creates Socket IO instance on express app, with socket-starter plugins
-function createIO (app, plugins) {
+function createIO (app, plugins, config) {
   const socketio = require('socket.io')
 
   // Note we don't use a port here because the master listens on it for us.
   // Don't expose our internal server to the outside.
-  const server = app.listen()
+  const server = listen(app, config)
   const io = socketio(server)
 
   // Tell Socket.IO to use the redis adapter. By default, the redis
@@ -156,6 +156,14 @@ function createIO (app, plugins) {
 
 // ----
 // Helper functions for socket-starter
+
+function listen (app, config) {
+  if (config.listen) {
+    return config.listen(app)
+  } else {
+    app.listen()
+  }
+}
 
 function getSessionParams (store, config) {
   return {
