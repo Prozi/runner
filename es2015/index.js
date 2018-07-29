@@ -20,7 +20,9 @@ function main(_ref) {
       _ref$plugins = _ref.plugins,
       plugins = _ref$plugins === undefined ? {} : _ref$plugins,
       _ref$extend = _ref.extend,
-      extend = _ref$extend === undefined ? null : _ref$extend;
+      extend = _ref$extend === undefined ? null : _ref$extend,
+      _ref$app = _ref.app,
+      app = _ref$app === undefined ? null : _ref$app;
 
   if (cluster.isMaster) {
 
@@ -73,11 +75,11 @@ function main(_ref) {
       }
     }).listen(port);
   } else {
-    var app = createApp(config);
+    var expressApp = app || createApp(config);
     if (extend) {
-      extend(app);
+      extend(expressApp);
     }
-    createIO(app, plugins, config);
+    createIO(expressApp, plugins, config);
   }
 }
 

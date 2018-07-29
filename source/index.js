@@ -13,7 +13,7 @@ const workers = []
 const CONNECTION_MESSAGE = 'sticky-session:connection'
 
 // This is what will be exported
-function main ({ config = {}, plugins = {}, extend = null }) {
+function main ({ config = {}, plugins = {}, extend = null, app = null }) {
   if (cluster.isMaster) {
     // Lazy load dependencies
     const net = require('net')
@@ -62,11 +62,11 @@ function main ({ config = {}, plugins = {}, extend = null }) {
       return farmhash.fingerprint32(ip) % totalWorkers // Farmhash is the fastest and works with IPv6, too
     }
   } else {
-    const app = createApp(config)
+    const expressApp = app || createApp(config)
     if (extend) {
-      extend(app)
+      extend(expressApp)
     }
-    createIO(app, plugins, config)
+    createIO(expressApp, plugins, config)
   }
 }
 
