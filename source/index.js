@@ -66,7 +66,7 @@ function main ({ config = {}, plugins = {}, extend = null }) {
     if (extend) {
       extend(app)
     }
-    return createIO(app, plugins, config)
+    createIO(app, plugins, config)
   }
 }
 
@@ -114,44 +114,44 @@ function createIO (app, plugins, config) {
 
   // Note we don't use a port here because the master listens on it for us.
   // Don't expose our internal server to the outside.
-  const server = listen(app, config)
-  const io = socketio(server)
+  listen(app, config).then((server) => {
 
-  // Tell Socket.IO to use the redis adapter. By default, the redis
-  // server is assumed to be on localhost:6379. You don't have to
-  // specify them explicitly unless you want to change them.
-  // io.adapter(sio_redis(redis_uri))
+    const io = socketio(server)
 
-  // Allow connection from any origin
-  io.set('origins', '*:*')
+    // Tell Socket.IO to use the redis adapter. By default, the redis
+    // server is assumed to be on localhost:6379. You don't have to
+    // specify them explicitly unless you want to change them.
+    // io.adapter(sio_redis(redis_uri))
 
-  Object.keys(plugins).forEach((name) => {
-    plugins[name].initialize(io.in(name))
-  })
+    // Allow connection from any origin
+    io.set('origins', '*:*')
 
-  io.on('connect', (socket) => {
-    console.log('[socket] connect', socket.id)
-    // require custom handshake
     Object.keys(plugins).forEach((name) => {
-      socket.on(`handshake:${name}`, (data) => {
-        socket.join(name)
-        plugins[name].handshake(socket, data)
+      plugins[name].initialize(io.in(name))
+    })
+
+    io.on('connect', (socket) => {
+      console.log('[socket] connect', socket.id)
+      // require custom handshake
+      Object.keys(plugins).forEach((name) => {
+        socket.on(`handshake:${name}`, (data) => {
+          socket.join(name)
+          plugins[name].handshake(socket, data)
+        })
       })
     })
+
+    // Listen to messages sent from the master. Ignore everything else.
+    process.on('message', (message, connection) => {
+      if (message === CONNECTION_MESSAGE) {
+        // Emulate a connection event on the server by emitting the
+        // event with the connection the master sent us.
+        server.emit('connection', connection)
+
+        connection.resume()
+      }
+    })
   })
-
-  // Listen to messages sent from the master. Ignore everything else.
-  process.on('message', (message, connection) => {
-    if (message === CONNECTION_MESSAGE) {
-      // Emulate a connection event on the server by emitting the
-      // event with the connection the master sent us.
-      server.emit('connection', connection)
-
-      connection.resume()
-    }
-  })
-
-  return server
 }
 
 // ----
@@ -161,7 +161,7 @@ function listen (app, config) {
   if (config.listen) {
     return config.listen(app)
   } else {
-    app.listen()
+    return new Promise((resolve) => resolve(app.listen()))
   }
 }
 
