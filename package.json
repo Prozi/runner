@@ -1,6 +1,6 @@
 {
   "name": "socket-starter",
-  "version": "1.11.0",
+  "version": "1.11.2",
   "license": "MIT",
   "description": "socket.io 2 + express 4 + nodejs cluster + mongodb starter",
   "author": "Jacek Piętal <prozi85@gmail.com>",
@@ -30,7 +30,6 @@
     "console-stamp": "^0.2.6",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
-    "editions": "^2.0.0",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "farmhash": "^2.1.0",
