@@ -159,6 +159,19 @@ and that app 'plugin' has it's IO instance bound to this room. see source, you'l
 
 the config is a json for express, mongodb, public static directories, etc.
 
+### defaults
+
+```
+javasript
+  if (!config.app) config.app = require('./app')(config)
+  if (!config.server) config.server = config.app.listen()
+```
+
+So you might supply your own app (express) / server instance
+or not listen on it immediately...
+
+### afterword
+
 have fun, please open any issues, etc.
 
 - Jacek Pietal
