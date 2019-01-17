@@ -7,7 +7,6 @@ function createIO (config, plugins) {
   // Note we don't use a port here because the master listens on it for us.
   // Don't expose our internal server to the outside.
   const server = config.app.listen()
-
   const io = socketio(server)
 
   // Tell Socket.IO to use the redis adapter. By default, the redis
@@ -43,6 +42,8 @@ function createIO (config, plugins) {
       connection.resume()
     }
   })
+
+  return server
 }
 
 module.exports = createIO

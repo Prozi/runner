@@ -6,9 +6,9 @@ function socketStarter (parameters) {
   const config = parameters.config || require('../config.json')
   if (!parameters.plugins) throw new Error('Add plugins as parameter! (see README.md)')
   if (cluster.isMaster) {
-    master(config)
+    return master(config)
   } else {
-    worker(config, parameters.plugins)
+    return worker(config, parameters.plugins)
   }
 }
 

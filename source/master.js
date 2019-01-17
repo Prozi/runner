@@ -14,7 +14,7 @@ function spawnWorkers (config) {
   }
 
   // Create the outside facing server listening on our port.
-  net.createServer({
+  return net.createServer({
     pauseOnConnect: true
   }, function (connection) {
     // We received a connection and need to pass it to the appropriate
