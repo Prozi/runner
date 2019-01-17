@@ -7,9 +7,9 @@ const plugin = {
     console.log('Initialized socket.io')
     console.log('Open http://localhost:3000/ to connect')
   },
-  handshake(socket) {
+  handshake(socket, data) {
     socket.name = sillyname.randomAdjective()
-    socket.emit('handshaken:chat')
+    socket.emit('handshaken:chat', data)
     socket.on('sent', (data) => {
       this.io.emit('sent', { name: socket.name, data })
     })

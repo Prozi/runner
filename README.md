@@ -46,10 +46,10 @@ index.html
           socket.emit('handshake:chat', { example: 'data for server' })
         })
         socket.on('joined', function (payload) {
-          addMessage(payload.id, 'joined')
+          addMessage(payload.name, 'joined')
         })
         socket.on('sent', function (payload) {
-          addMessage(payload.id, payload.data)
+          addMessage(payload.name, payload.data)
         })
         document.getElementById('chat').addEventListener('submit', function (event) {
           event.preventDefault()
@@ -158,25 +158,6 @@ this is thanks to handshake function that joins a specific room for that socket,
 and that app 'plugin' has it's IO instance bound to this room. see source, you'll see what I mean.
 
 the config is a json for express, mongodb, public static directories, etc.
-
-### extend
-
-the extend function is what you need to extend `express()` with
-
-example:
-```javascript
-const routes = require('./routes')
-
-run({
-    config,
-    plugins,
-    extend
-})
-
-function extend (app) {
-    app.use('/', routes)
-}
-```
 
 have fun, please open any issues, etc.
 

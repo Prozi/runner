@@ -27,10 +27,10 @@
           socket.emit('handshake:chat', { example: 'data for server' })
         })
         socket.on('joined', function (payload) {
-          addMessage(payload.id, 'joined')
+          addMessage(payload.name, 'joined')
         })
         socket.on('sent', function (payload) {
-          addMessage(payload.id, payload.data)
+          addMessage(payload.name, payload.data)
         })
         document.getElementById('chat').addEventListener('submit', function (event) {
           event.preventDefault()
