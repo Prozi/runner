@@ -37,13 +37,13 @@ function createIO (config, plugins) {
     if (message === config.connectionMessage) {
       // Emulate a connection event on the server by emitting the
       // event with the connection the master sent us.
-      server.emit('connection', connection)
+      config.server.emit('connection', connection)
 
       connection.resume()
     }
   })
 
-  return server
+  return config.server
 }
 
 module.exports = createIO
