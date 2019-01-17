@@ -10,7 +10,7 @@
     "metadata": "green"
   },
   "store": {
-    "url": "mongodb://heroku_d5551zgk:tlgqe8338ea9rttj9qblqqd86d@ds155218.mlab.com:55218/heroku_d5551zgk",
+    "url": "mongodb://localhost:27017/",
     "collection": "sessions"
   },
   "debug": false,

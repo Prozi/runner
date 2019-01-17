@@ -128,7 +128,6 @@ function createIO(app, plugins, config) {
   // Note we don't use a port here because the master listens on it for us.
   // Don't expose our internal server to the outside.
   listen(app, config).then(function (server) {
-
     var io = socketio(server);
 
     // Tell Socket.IO to use the redis adapter. By default, the redis
