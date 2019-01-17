@@ -21,26 +21,44 @@ index.html
 <html>
   <head>
     <title>Socket.IO Simplest Front End Example For Demonstration of Socket-Starter</title>
+    <style>
+      body, input {
+        font-size: 2rem;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      code {
+        white-space: pre-wrap;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
   </head>
   <body>
-    <ul id="messages"></ul>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
+    <form id="chat">
+      <h1>Chat</h1>
+      <input type="text" id="message"/>
+      <input type="submit" value="send"/>
+      <div id="messages"></div>
+    </form>
     <script>
       (function () {
-        var APP_NAME = 'chat';
-        var socket = io();
-        var messages = document.getElementById('messages');
-        function addMessage (message) {
-          messages.innerHTML += '<li>' + message + '</li>';
+        var socket = io('http://localhost:3000')
+        socket.on('connect', function () {
+          socket.emit('handshake:chat', { example: 'data for server' })
+        })
+        socket.on('joined', function (payload) {
+          addMessage(payload.id, 'joined')
+        })
+        socket.on('sent', function (payload) {
+          addMessage(payload.id, payload.data)
+        })
+        document.getElementById('chat').addEventListener('submit', function (event) {
+          event.preventDefault()
+          socket.emit('sent', document.getElementById('message').value)
+        })
+        function addMessage (type, message) {
+          document.getElementById('messages').innerHTML += '<div><span>' + type + '</span> <code>' + message + '</code></div>\n'
         }
-        socket.on('handshaken:' + APP_NAME, function (data) {
-          addMessage('handshaken:' + JSON.stringify(data, null, 2));
-        });
-        socket.on('joined', function (data) {
-          addMessage('joined:' + JSON.stringify(data, null, 2));
-        });
-        socket.emit('handshake:' + APP_NAME, { example: 'data for server' });
-      })();
+      })()
     </script>
   </body>
 </html>
@@ -48,66 +66,57 @@ index.html
 
 chat.js
 ```javascript
-'use strict';
+const sillyname = require('sillyname')
 
 // it eats this format
-module.exports = {
-    initialize(io) {
-        this.io = io;
-        console.log('Initialized socket io');
-    },
-    handshake(socket, data) {
-        console.log('Handshaken socket', socket.id, data);
-        socket.emit('handshaken:chat', {
-            example: 'data from server'
-        });
-        this.io.emit('joined', socket.id);
-    }
-};
+const plugin = {
+  initialize(io) {
+    this.io = io
+    console.log('Initialized socket.io')
+    console.log('Open http://localhost:3000/ to connect')
+  },
+  handshake(socket) {
+    socket.name = sillyname.randomAdjective()
+    socket.emit('handshaken:chat')
+    socket.on('sent', (data) => {
+      this.io.emit('sent', { name: socket.name, data })
+    })
+    this.io.emit('joined', { name: socket.name })
+  }
+}
+
+module.exports = plugin
+module.exports.default = plugin
 ```
 
 index.js
 ```javascript
-'use strict';
-
-const run = require('socket-starter');
-const config = require('./config');
-const chat = require('./chat');
-const plugins = {
-    chat
-};
-
-run({
-    config,
-    plugins
-});
+require('socket-starter')({
+  config: require('socket-starter/config.json'),
+  plugins: {
+    chat: require('socket-starter/example/chat.js')
+  }
+})
 ```
 
 config.json
 ```javascript
 {
-    "auth": {
-        "key": "express.sid",
-        "secret": "this is a secret!",
-        "cookie": {}
-    },
-    "colors": {
-        "stamp": "yellow",
-        "label": "white",
-        "metadata": "green"
-    },
-    "store": {
-        "url": "mongodb://localhost:27017/test",
-        "collection": "mySessions"
-    },
-    "workers": 1,
-    "static": {
-        "config": {
-            "redirect": false,
-            "maxAge": 86400000
-        },
-        "directories": ["public"]
-    }
+  "totalWorkers": 1,
+  "sessionParams": {
+    "key": "prozi85",
+    "secret": "socket-starter",
+    "resave": true,
+    "saveUninitialized": true
+  },
+  "connectionMessage": "sticky-session:connection",
+  "mongoStore": {
+    "url": "mongodb://localhost:27017/",
+    "collection": "sessions"
+  },
+  "static": {
+    "directories": ["static"]
+  }
 }
 ```
 
@@ -123,7 +132,7 @@ see [example folder](https://github.com/Prozi/socket-starter/tree/master/example
 }
 ```
 
-### the `const run = require('socket-starter');`
+### the `const run = require('socket-starter')`
 
 it returns a function, that takes one parameter: `options`
 
@@ -132,14 +141,13 @@ it returns a function, that takes one parameter: `options`
 ```javascript
 {
     config,  // example see example/config.json
-    plugins, // example see example/chat.js
-    extend = (app) => {}
+    plugins // example see example/chat.js
 }
 ```
 
 ### config
 
-this is the app's configuration, see that it has filled all fields from example/config.json
+this is the app's configuration, see that falls back if not supplied with `socket-starter/config.json`
 
 ### plugins
 
@@ -157,16 +165,16 @@ the extend function is what you need to extend `express()` with
 
 example:
 ```javascript
-const routes = require('./routes');
+const routes = require('./routes')
 
 run({
     config,
     plugins,
     extend
-});
+})
 
 function extend (app) {
-    app.use('/', routes);
+    app.use('/', routes)
 }
 ```
 

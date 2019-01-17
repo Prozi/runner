@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO Simplest Front End Example For Demonstration of Socket-Starter</title>
+    <style>
+      body, input {
+        font-size: 2rem;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      code {
+        white-space: pre-wrap;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+  </head>
+  <body>
+    <form id="chat">
+      <h1>Chat</h1>
+      <input type="text" id="message"/>
+      <input type="submit" value="send"/>
+      <div id="messages"></div>
+    </form>
+    <script>
+      (function () {
+        var socket = io('http://localhost:3000')
+        socket.on('connect', function () {
+          socket.emit('handshake:chat', { example: 'data for server' })
+        })
+        socket.on('joined', function (payload) {
+          addMessage(payload.id, 'joined')
+        })
+        socket.on('sent', function (payload) {
+          addMessage(payload.id, payload.data)
+        })
+        document.getElementById('chat').addEventListener('submit', function (event) {
+          event.preventDefault()
+          socket.emit('sent', document.getElementById('message').value)
+        })
+        function addMessage (type, message) {
+          document.getElementById('messages').innerHTML += '<div><span>' + type + '</span> <code>' + message + '</code></div>\n'
+        }
+      })()
+    </script>
+  </body>
+</html>

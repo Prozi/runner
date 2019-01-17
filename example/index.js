@@ -1,13 +1,8 @@
-'use strict';
+'use strict'
 
-const run = require('..');
-const config = require('./config');
-const chat = require('./chat');
-const plugins = {
-  chat
-};
-
-run({
-  config,
-  plugins
-});
+require('../source/index.js')({
+  config: require('../config.json'),
+  plugins: {
+    chat: require('./chat.js')
+  }
+})

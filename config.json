@@ -1,0 +1,17 @@
+{
+  "totalWorkers": 1,
+  "sessionParams": {
+    "key": "prozi85",
+    "secret": "socket-starter",
+    "resave": true,
+    "saveUninitialized": true
+  },
+  "connectionMessage": "sticky-session:connection",
+  "mongoStore": {
+    "url": "mongodb://localhost:27017/",
+    "collection": "sessions"
+  },
+  "static": {
+    "directories": ["static"]
+  }
+}

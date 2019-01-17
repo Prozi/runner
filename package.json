@@ -1,6 +1,6 @@
 {
   "name": "socket-starter",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "license": "MIT",
   "description": "socket.io 2 + express 4 + nodejs cluster + mongodb starter",
   "author": "Jacek Piętal <prozi85@gmail.com>",
@@ -12,22 +12,19 @@
     "compile": "babel ./source --out-dir ./es2015 --presets es2015"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^10.0.1",
-    "babel-preset-es2015": "^6.24.1",
     "eslint": "^5.12.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "sillyname": "^0.1.0"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cluster": "^0.7.7",
     "compression": "^1.7.3",
     "connect-mongo": "^2.0.3",
-    "console-stamp": "^0.2.7",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
@@ -46,29 +43,5 @@
     "socket.io",
     "passport",
     "same port"
-  ],
-  "editions": [
-    {
-      "description": "Source + ESNext + Import",
-      "entry": "source/index.js",
-      "syntaxes": [
-        "javascript",
-        "esnext",
-        "import",
-        "arrows",
-        "const",
-        "let",
-        "destructuring"
-      ]
-    },
-    {
-      "description": "Babel Compiled + ES2015 + Require",
-      "entry": "es2015/index.js",
-      "syntaxes": [
-        "javascript",
-        "es2015",
-        "require"
-      ]
-    }
   ]
 }
