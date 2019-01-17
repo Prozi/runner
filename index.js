@@ -1,4 +1,4 @@
 const socketStarter = require('./source')
 
 module.exports = socketStarter
-module.epoxrts.default = socketStarter
+module.exports.default = socketStarter
