@@ -1,11 +1,8 @@
 # Socket-STARTER FOR APPS
 
-[![npm version](https://badge.fury.io/js/socket-starter.svg)](https://badge.fury.io/js/socket-starter)
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/cf7828e55f51edffbe3d/maintainability)](https://codeclimate.com/github/Prozi/socket-starter/maintainability)
-
-[![dependencies Status](https://david-dm.org/Prozi/socket-starter/status.svg)](https://david-dm.org/Prozi/socket-starter)
-
+[![npm version](https://badge.fury.io/js/socket-starter.svg)](https://badge.fury.io/js/socket-starter) 
+[![Maintainability](https://api.codeclimate.com/v1/badges/cf7828e55f51edffbe3d/maintainability)](https://codeclimate.com/github/Prozi/socket-starter/maintainability) 
+[![dependencies Status](https://david-dm.org/Prozi/socket-starter/status.svg)](https://david-dm.org/Prozi/socket-starter) 
 [![Known Vulnerabilities](https://snyk.io/test/github/Prozi/socket-starter/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Prozi/socket-starter?targetFile=package.json)
 
 ### socket.io 2 + express 4 + nodejs cluster + mongodb sticky-session
