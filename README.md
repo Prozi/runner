@@ -142,7 +142,7 @@ it returns a function, that takes one parameter: `options`
 
 ```javascript
 {
-    config,  // example see example/config.json
+    config, // example see example/config.json
     plugins // example see example/chat.js
 }
 ```
@@ -150,6 +150,9 @@ it returns a function, that takes one parameter: `options`
 ### config
 
 this is the app's configuration, see that falls back if not supplied with `socket-starter/config.json`
+
+* Config can also have optional express app instance as `config.app = express()`
+* Config can also have optional server instance as `config.server` or it will listen on `config.server = config.app.listen()`
 
 ### plugins
 
