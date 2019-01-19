@@ -8,6 +8,7 @@ const plugin = {
     console.log('Open http://localhost:3000/ to connect')
   },
   handshake(socket, data) {
+    console.log(data)
     socket.name = sillyname.randomAdjective()
     socket.emit('handshaken:chat', data)
     socket.on('sent', (data) => {

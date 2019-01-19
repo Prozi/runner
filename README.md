@@ -1,16 +1,16 @@
 # STARTER FOR APPS
 
-### socket.io 2 + express 4 + nodejs cluster
+### socket.io 2 + express 4 + nodejs cluster + mongodb sticky-session
 
-`npm install socket-starter --save`
+`yarn add socket-starter --save`
 
 ## APP EXAMPLE:
 
 to run below example you can:
 
 ```bash
-cd node_modules/socket-starter
-npm run test
+$ cd node_modules/socket-starter
+$ yarn test
 ```
 
 ----
@@ -75,9 +75,10 @@ const plugin = {
     console.log('Initialized socket.io')
     console.log('Open http://localhost:3000/ to connect')
   },
-  handshake(socket) {
+  handshake(socket, data) {
+    console.log(data)
     socket.name = sillyname.randomAdjective()
-    socket.emit('handshaken:chat')
+    socket.emit('handshaken:chat', data)
     socket.on('sent', (data) => {
       this.io.emit('sent', { name: socket.name, data })
     })
@@ -89,17 +90,18 @@ module.exports = plugin
 module.exports.default = plugin
 ```
 
-index.js
+index.js // of example
 ```javascript
-require('socket-starter')({
-  config: require('socket-starter/config.json'),
+// in your project just use `require('socket-starter')({ ... })`
+require('../source/index.js')({
+  config: require('./config.json'),
   plugins: {
-    chat: require('socket-starter/example/chat.js')
+    chat: require('./chat.js')
   }
 })
 ```
 
-config.json
+config.json // example configuration
 ```javascript
 {
   "totalWorkers": 1,

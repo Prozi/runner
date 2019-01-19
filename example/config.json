@@ -1,21 +1,17 @@
 {
-  "auth": {
+  "totalWorkers": 1,
+  "sessionParams": {
     "key": "prozi85",
-    "secret": "socket-starter"
+    "secret": "socket-starter",
+    "resave": true,
+    "saveUninitialized": true
   },
-  "metadata": true,
-  "colors": {
-    "stamp": "yellow",
-    "label": "white",
-    "metadata": "green"
-  },
-  "store": {
+  "connectionMessage": "sticky-session:connection",
+  "mongoStore": {
     "url": "mongodb://localhost:27017/",
     "collection": "sessions"
   },
-  "debug": false,
-  "workers": 1,
   "static": {
-    "directories": ["public"]
+    "directories": ["example/static"]
   }
 }

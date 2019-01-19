@@ -1,18 +1,17 @@
 {
   "name": "socket-starter",
-  "version": "1.13.7",
+  "version": "1.13.8",
   "license": "MIT",
-  "description": "socket.io 2 + express 4 + nodejs cluster + mongodb starter",
+  "description": "socket.io 2 + express 4 + nodejs cluster + mongodb sticky-session",
   "author": "Jacek Piętal <prozi85@gmail.com>",
   "private": false,
-  "main": "es2015/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "node ./example",
-    "lint": "eslint ./source --fix",
-    "compile": "babel ./source --out-dir ./es2015 --presets es2015"
+    "lint": "eslint ./source --fix"
   },
   "devDependencies": {
-    "eslint": "^5.12.0",
+    "eslint": "^5.12.1",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^8.0.1",
@@ -36,12 +35,17 @@
     "type": "git",
     "url": "https://github.com/Prozi/socket-starter"
   },
+  "bugs": {
+    "url": "https://github.com/Prozi/socket-starter/issues"
+  },
   "keywords": [
+    "same port",
     "express",
     "mongodb",
     "cluster",
     "socket.io",
     "passport",
-    "same port"
+    "chat",
+    "sticky-session"
   ]
 }
