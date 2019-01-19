@@ -1,4 +1,6 @@
-# STARTER FOR APPS
+# Socket-STARTER FOR APPS
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/cf7828e55f51edffbe3d/maintainability)](https://codeclimate.com/github/Prozi/socket-starter/maintainability)
 
 ### socket.io 2 + express 4 + nodejs cluster + mongodb sticky-session
 
