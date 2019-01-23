@@ -34,7 +34,8 @@ socketStarter({
   plugins: {
     chat
   }
-})```
+})
+```
 
 see [example/index.js]https://github.com/Prozi/socket-starter/blob/master/example/index.js
 
@@ -63,6 +64,8 @@ const plugin = {
 module.exports = plugin
 module.exports.default = plugin
 ```
+
+see [example/chat.js]https://github.com/Prozi/socket-starter/blob/master/example/chat.js
 
 ----
 
@@ -116,8 +119,8 @@ it returns a function, that takes one parameter: `options`
 
 ```javascript
 {
-    config, // example see example/config.json
-    plugins // example see example/chat.js
+    config: {}, // example see example/config.json
+    plugins: {} // example see example/chat.js
 }
 ```
 
