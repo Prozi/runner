@@ -24,7 +24,7 @@
       (function () {
         var socket = io('http://localhost:3000')
         socket.on('connect', function () {
-          socket.emit('handshake:chat', { example: 'data for server' })
+          socket.emit('handshake:chat', { cookie: '🍪' })
         })
         socket.on('joined', function (payload) {
           addMessage(payload.name, 'joined')

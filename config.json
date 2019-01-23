@@ -1,4 +1,5 @@
 {
+  "port": null,
   "totalWorkers": 1,
   "sessionParams": {
     "key": "prozi85",
@@ -12,6 +13,6 @@
     "collection": "sessions"
   },
   "static": {
-    "directories": ["example/static"]
+    "directories": ["static"]
   }
 }

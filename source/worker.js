@@ -1,9 +1,12 @@
 const socketio = require('socket.io')
+const app = require('./app')
 
 // Creates Socket IO instance on express app, with socket-starter plugins
-function createIO (config, plugins) {
-  if (!config.app) config.app = require('./app')(config)
+function createIO (config, socketStarterPlugins) {
+  if (!config.app) config.app = app(config)
   if (!config.server) config.server = config.app.listen()
+
+  const plugins = socketStarterPlugins || {}
 
   // Note we don't use a port here because the master listens on it for us.
   // Don't expose our internal server to the outside.
@@ -14,7 +17,7 @@ function createIO (config, plugins) {
   // specify them explicitly unless you want to change them.
   // io.adapter(sio_redis(redis_uri))
 
-  // Allow connection = require(any origin
+  // Allow connection = from any origin
   io.set('origins', '*:*')
 
   Object.keys(plugins).forEach((name) => {
@@ -22,7 +25,6 @@ function createIO (config, plugins) {
   })
 
   io.on('connect', (socket) => {
-    console.log('[socket-starter] socket.io connect:', socket.id)
     // require custom handshake
     Object.keys(plugins).forEach((name) => {
       socket.on(`handshake:${name}`, (data) => {
@@ -32,7 +34,7 @@ function createIO (config, plugins) {
     })
   })
 
-  // Listen to messages sent = require(the master. Ignore everything else.
+  // Listen to messages sent = from the master. Ignore everything else.
   process.on('message', (message, connection) => {
     if (message === config.connectionMessage) {
       // Emulate a connection event on the server by emitting the

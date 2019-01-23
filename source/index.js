@@ -1,10 +1,10 @@
 const cluster = require('cluster')
 const master = require('./master')
 const worker = require('./worker')
+const defaultConfig = require('../config.json')
 
 function socketStarter (parameters) {
-  const config = parameters.config || require('../example/config.json')
-  if (!parameters.plugins) throw new Error('Add plugins as parameter! (see README.md)')
+  const config = Object.assign(defaultConfig, parameters.config || {})
   if (cluster.isMaster) {
     return master(config)
   } else {

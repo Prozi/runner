@@ -17,56 +17,30 @@ $ yarn test
 
 ----
 
-index.html
-```html
-<!doctype html>
-<html>
-  <head>
-    <title>Socket.IO Simplest Front End Example For Demonstration of Socket-Starter</title>
-    <style>
-      body, input {
-        font-size: 2rem;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-      }
-      code {
-        white-space: pre-wrap;
-      }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-  </head>
-  <body>
-    <form id="chat">
-      <h1>Chat</h1>
-      <input type="text" id="message"/>
-      <input type="submit" value="send"/>
-      <div id="messages"></div>
-    </form>
-    <script>
-      (function () {
-        var socket = io('http://localhost:3000')
-        socket.on('connect', function () {
-          socket.emit('handshake:chat', { example: 'data for server' })
-        })
-        socket.on('joined', function (payload) {
-          addMessage(payload.name, 'joined')
-        })
-        socket.on('sent', function (payload) {
-          addMessage(payload.name, payload.data)
-        })
-        document.getElementById('chat').addEventListener('submit', function (event) {
-          event.preventDefault()
-          socket.emit('sent', document.getElementById('message').value)
-        })
-        function addMessage (type, message) {
-          document.getElementById('messages').innerHTML += '<div><span>' + type + '</span> <code>' + message + '</code></div>\n'
-        }
-      })()
-    </script>
-  </body>
-</html>
-```
+`index.js // of _your_ example chat minimum setup`
+```javascript
+const os = require('os')
+const socketStarter = require('socket-starter')
+const chat = require('./chat.js')
 
-chat.js
+socketStarter({
+  config: {
+    totalWorkers: os.cpus().length,
+    port: 3000,
+    static: {
+      directories: ['example/static']
+    }
+  },
+  plugins: {
+    chat
+  }
+})```
+
+see [example/index.js]https://github.com/Prozi/socket-starter/blob/master/example/index.js
+
+----
+
+`chat.js`
 ```javascript
 const sillyname = require('sillyname')
 
@@ -74,17 +48,15 @@ const sillyname = require('sillyname')
 const plugin = {
   initialize(io) {
     this.io = io
-    console.log('Initialized socket.io')
-    console.log('Open http://localhost:3000/ to connect')
   },
   handshake(socket, data) {
-    console.log(data)
     socket.name = sillyname.randomAdjective()
-    socket.emit('handshaken:chat', data)
     socket.on('sent', (data) => {
       this.io.emit('sent', { name: socket.name, data })
+      console.log(`🐼 ${socket.name}: ${data}`)
     })
     this.io.emit('joined', { name: socket.name })
+    console.log(`🐼 ${socket.name} joined`, data)
   }
 }
 
@@ -92,20 +64,12 @@ module.exports = plugin
 module.exports.default = plugin
 ```
 
-index.js // of example
-```javascript
-// in your project just use `require('socket-starter')({ ... })`
-require('../source/index.js')({
-  config: require('./config.json'),
-  plugins: {
-    chat: require('./chat.js')
-  }
-})
-```
+----
 
-config.json // example configuration
+`config.json // defaults to this configuration`
 ```javascript
 {
+  "port" process.env.PORT,
   "totalWorkers": 1,
   "sessionParams": {
     "key": "prozi85",
@@ -122,10 +86,18 @@ config.json // example configuration
     "directories": ["static"]
   }
 }
+
 ```
 
-see [example folder](https://github.com/Prozi/socket-starter/tree/master/example)
+see [example/config.json]https://github.com/Prozi/socket-starter/blob/master/example/config.json
 
+----
+
+`index.html`
+
+see [example/static/index.html]https://github.com/Prozi/socket-starter/blob/master/example/example/static/index.html
+
+----
 
 ### modules (for example chat) are in format:
 
@@ -173,6 +145,8 @@ javasript
   if (!config.app) config.app = require('./app')(config)
   if (!config.server) config.server = config.app.listen()
 ```
+
+see [source/app.js]https://github.com/Prozi/socket-starter/blob/master/source/app.js
 
 So you might supply your own app (express) / server instance
 or not listen on it immediately...
