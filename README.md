@@ -92,7 +92,7 @@ see [example/chat.js](https://github.com/Prozi/socket-starter/blob/master/exampl
 
 ```
 
-see [example/config.json](https://github.com/Prozi/socket-starter/blob/master/example/config.json)
+see [config.json](https://github.com/Prozi/socket-starter/blob/master/config.json)
 
 ----
 
