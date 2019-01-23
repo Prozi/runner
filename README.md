@@ -149,7 +149,7 @@ javasript
   if (!config.server) config.server = config.app.listen()
 ```
 
-see [source/app.js]https://github.com/Prozi/socket-starter/blob/master/source/app.js
+see [source/app.js](https://github.com/Prozi/socket-starter/blob/master/source/app.js)
 
 So you might supply your own app (express) / server instance
 or not listen on it immediately...
