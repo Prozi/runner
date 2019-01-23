@@ -37,7 +37,7 @@ socketStarter({
 })
 ```
 
-see [example/index.js]https://github.com/Prozi/socket-starter/blob/master/example/index.js
+see [example/index.js](https://github.com/Prozi/socket-starter/blob/master/example/index.js)
 
 ----
 
@@ -65,7 +65,7 @@ module.exports = plugin
 module.exports.default = plugin
 ```
 
-see [example/chat.js]https://github.com/Prozi/socket-starter/blob/master/example/chat.js
+see [example/chat.js](https://github.com/Prozi/socket-starter/blob/master/example/chat.js)
 
 ----
 
@@ -92,13 +92,13 @@ see [example/chat.js]https://github.com/Prozi/socket-starter/blob/master/example
 
 ```
 
-see [example/config.json]https://github.com/Prozi/socket-starter/blob/master/example/config.json
+see [example/config.json](https://github.com/Prozi/socket-starter/blob/master/example/config.json)
 
 ----
 
 `index.html`
 
-see [example/static/index.html]https://github.com/Prozi/socket-starter/blob/master/example/example/static/index.html
+see [example/static/index.html](https://github.com/Prozi/socket-starter/blob/master/example/example/static/index.html)
 
 ----
 
