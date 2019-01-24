@@ -7,9 +7,8 @@ function socketStarter (parameters) {
   const config = Object.assign(defaultConfig, parameters.config || {})
   if (cluster.isMaster) {
     return master(config)
-  } else {
-    return worker(config, parameters.plugins)
   }
+  return worker(config, parameters.plugins)
 }
 
 module.exports = socketStarter
