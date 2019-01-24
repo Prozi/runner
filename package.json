@@ -47,5 +47,9 @@
     "passport",
     "chat",
     "sticky-session"
-  ]
+  ],
+  "engines": {
+    "node": "^6.14.0",
+    "yarn": "^1.12.3"
+  }
 }
