@@ -147,8 +147,7 @@ the config is a json for express, mongodb, public static directories, etc.
 
 ### defaults
 
-```
-javasript
+```javasript
   if (!config.app) config.app = require('./app')(config)
   if (!config.server) config.server = config.app.listen()
 ```
