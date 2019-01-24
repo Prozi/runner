@@ -1,6 +1,6 @@
 # Socket-STARTER FOR APPS
 
-[![npm version](https://badge.fury.io/js/socket-starter.svg)](https://badge.fury.io/js/socket-starter) [![![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Prozi/socket-starter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Prozi/socket-starter/?branch=master) [![Known Vulnerabilities](https://snyk.io/test/github/Prozi/socket-starter/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Prozi/socket-starter?targetFile=package.json) [![Maintainability](https://api.codeclimate.com/v1/badges/cf7828e55f51edffbe3d/maintainability)](https://codeclimate.com/github/Prozi/socket-starter/maintainability)
+[![npm version](https://badge.fury.io/js/socket-starter.svg)](https://badge.fury.io/js/socket-starter) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Prozi/socket-starter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Prozi/socket-starter/?branch=master) [![Known Vulnerabilities](https://snyk.io/test/github/Prozi/socket-starter/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Prozi/socket-starter?targetFile=package.json) [![Maintainability](https://api.codeclimate.com/v1/badges/cf7828e55f51edffbe3d/maintainability)](https://codeclimate.com/github/Prozi/socket-starter/maintainability)
 
 ### socket.io 2 + express 4 + nodejs cluster + mongodb sticky-session
 
