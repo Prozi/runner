@@ -44,7 +44,6 @@
     "mongodb",
     "cluster",
     "socket.io",
-    "passport",
     "chat",
     "sticky-session"
   ],
