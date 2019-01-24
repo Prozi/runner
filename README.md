@@ -111,9 +111,9 @@ see [example/static/index.html](https://github.com/Prozi/socket-starter/blob/mas
 }
 ```
 
-### the `const run = require('socket-starter')`
+### the `const socketStarter = require('socket-starter')`
 
-it returns a function, that takes one parameter: `options`
+returns a function, that takes one JSON parameter: `options`
 
 ### options
 
@@ -123,6 +123,10 @@ it returns a function, that takes one parameter: `options`
     plugins: {} // example see example/chat.js
 }
 ```
+
+### calling it returns
+
+a server instance
 
 ### config
 
