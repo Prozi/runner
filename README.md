@@ -106,8 +106,8 @@ see [example/static/index.html](https://github.com/Prozi/socket-starter/blob/mas
 
 ```javascript
 { 
-    initialize(io), 
-    handshake(socket, data)
+  initialize(io), 
+  handshake(socket, data)
 }
 ```
 
@@ -119,8 +119,8 @@ returns a function, that takes one JSON parameter: `options`
 
 ```javascript
 {
-    config: {}, // example see example/config.json
-    plugins: {} // example see example/chat.js
+  config: {}, // example see example/config.json
+  plugins: {} // example see example/chat.js
 }
 ```
 
@@ -147,7 +147,7 @@ the config is a json for express, mongodb, public static directories, etc.
 
 ### defaults
 
-```javasript
+```javascript
   if (!config.app) config.app = require('./app')(config)
   if (!config.server) config.server = config.app.listen()
 ```
