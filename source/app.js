@@ -10,7 +10,7 @@ const path = require('path')
 
 // returns secret string password for sessions / cookies
 function getSecret (config) {
-  return config.mongoStore ? config.mongoStore.secret : (config.secret || 'TheCakeIsALie')
+  return config.sessionParams.secret || 'TheCakeIsALie'
 }
 
 // creates cookie parser based on configuration

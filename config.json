@@ -2,8 +2,8 @@
   "port": null,
   "totalWorkers": 1,
   "sessionParams": {
-    "key": "prozi85",
-    "secret": "socket-starter",
+    "key": "socket-starter",
+    "secret": "TheCakeIsALie",
     "resave": true,
     "saveUninitialized": true
   },
