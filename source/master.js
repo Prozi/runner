@@ -55,7 +55,7 @@ function spawnWorker (i, respawn) {
     spawnWorker(i, true)
   })
 
-  console[respawn ? 'warn' : 'log'](`socket-starter🚀 ${respawn ? 're' : ''}spawned worker number: ${i + 1}`)
+  console[respawn ? 'warn' : 'log'](`socket-starter🚀 worker: ${i + 1} ${respawn ? 'respawned' : 'spawned'}`)
 }
 
 module.exports = spawnWorkers

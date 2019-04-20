@@ -2,8 +2,8 @@ const socketio = require('socket.io')
 const app = require('./app')
 
 // Creates Socket IO instance on express app, with socket-starter plugins
-function createIO (config, socketStarterPlugins) {
-  if (!config.app) config.app = app(config)
+async function createIO (config, socketStarterPlugins) {
+  if (!config.app) config.app = await app(config)
   if (!config.server) config.server = config.app.listen()
 
   const plugins = socketStarterPlugins || {}

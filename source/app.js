@@ -2,25 +2,54 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const expressSession = require('express-session')
 const connectMongo = require('connect-mongo')
+const MongoClient = require('mongodb')
 const cors = require('cors')
 const compression = require('compression')
 const bodyParser = require('body-parser')
 const path = require('path')
 
-// Creates express app, adds express plugins, extends app
-function createApp (config) {
-  const Session = connectMongo(expressSession)
-  config.sessionParams.store = new Session(config.mongoStore)
+// returns secret string password for sessions / cookies
+function getSecret (config) {
+  return config.mongoStore ? config.mongoStore.secret : (config.secret || 'TheCakeIsALie')
+}
 
+// creates cookie parser based on configuration
+function createCookieParser (config) {
+  return cookieParser(getSecret(config))
+}
+
+function testForMongoDB (config) {
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(config.mongoStore.url, (err) => {
+      (err && reject(err)) || resolve()
+    })
+  })
+}
+
+// extends config sessionparams with mongo store
+// does not throw exception if no mongo instance is available
+async function addMongoStore (config) {
+  try {
+    if (await testForMongoDB(config)) {
+      const Session = connectMongo(expressSession)
+      config.sessionParams.store = new Session(config.mongoStore)
+    }
+  } catch (err) {
+    console.warn(`socket-starter🚀 worker mongodb not configured, but that's ok`)
+  }
+}
+
+// Creates express app, adds express plugins, extends app
+async function createApp (config) {
   const app = express()
-  const sessions = expressSession(config.sessionParams)
-  const cookies = cookieParser(config.mongoStore.secret)
 
   app.use(cors())
   app.use(compression())
 
-  app.use(sessions)
-  app.use(cookies)
+  config.mongoStore && await addMongoStore(config)
+
+  app.use(expressSession(config.sessionParams))
+  app.use(createCookieParser(config))
 
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({
