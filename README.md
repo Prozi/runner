@@ -135,6 +135,8 @@ this is the app's configuration, see that falls back if not supplied with `socke
 * Config can also have optional express app instance as `config.app = express()`
 * Config can also have optional server instance as `config.server` or it will listen on `config.server = config.app.listen()`
 
+Also Check out `socket-starter/source/app` for more information about app instance...
+
 ### plugins
 
 Core concept:
@@ -148,7 +150,7 @@ the config is a json for express, mongodb, public static directories, etc.
 ### defaults
 
 ```javascript
-  if (!config.app) config.app = require('./app')(config)
+  if (!config.app) config.app = await (require('socket-starter/source/app')(config))
   if (!config.server) config.server = config.app.listen()
 ```
 
