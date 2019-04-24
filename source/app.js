@@ -35,7 +35,7 @@ async function addMongoStore (config) {
       config.sessionParams.store = new Session(config.mongoStore)
     }
   } catch (err) {
-    console.warn(`socket-starter🚀 worker mongodb not configured, but that's ok`)
+    console.warn(`socket-starter🚀 mongodb not configured, but that's ok`)
   }
 }
 

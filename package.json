@@ -1,8 +1,8 @@
 {
   "name": "socket-starter",
-  "version": "1.15.1",
+  "version": "1.15.2",
   "license": "MIT",
-  "description": "socket.io 2 + express 4 + nodejs cluster + mongodb sticky-session",
+  "description": "Latest Express with Socket.IO and [optional] MongoDB Sticky-Session",
   "author": "Jacek Piętal <prozi85@gmail.com>",
   "private": false,
   "main": "index.js",
@@ -11,23 +11,23 @@
     "lint": "eslint source --fix"
   },
   "devDependencies": {
-    "eslint": "^5.12.1",
+    "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.15.0",
+    "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "sillyname": "^0.1.0"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cluster": "^0.7.7",
-    "compression": "^1.7.3",
+    "compression": "^1.7.4",
     "connect-mongo": "^2.0.3",
-    "cookie-parser": "^1.4.3",
+    "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "express-session": "^1.15.6",
+    "express-session": "^1.16.1",
     "farmhash": "^2.1.0",
     "socket.io": "^2.2.0"
   },
