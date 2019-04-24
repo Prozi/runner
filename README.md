@@ -1,14 +1,30 @@
 # Socket Starter
 
+Latest Express with Socket.IO and [optional] MongoDB Sticky-Session
+
 [![npm version](https://badge.fury.io/js/socket-starter.svg)](https://badge.fury.io/js/socket-starter) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Prozi/socket-starter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Prozi/socket-starter/?branch=master) [![Known Vulnerabilities](https://snyk.io/test/github/Prozi/socket-starter/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Prozi/socket-starter?targetFile=package.json) [![Maintainability](https://api.codeclimate.com/v1/badges/cf7828e55f51edffbe3d/maintainability)](https://codeclimate.com/github/Prozi/socket-starter/maintainability)
 
-### socket.io 2 + express 4 + nodejs cluster + mongodb sticky-session
+## Installation
 
 `yarn add socket-starter --save`
 
-### the `require('socket-starter')`
+or if you're old school
 
-returns a `function` you can `call` anytime
+`npm install socket-starter --save`
+
+## Core concept:
+
+the whole idea is that you can start few 'plugins' that are socket.io apps on single port
+this is thanks to handshake function that joins a specific room for that socket, 
+and that app 'plugin' has it's IO instance bound to this room. see source, you'll see what I mean.
+
+the config is a json for express, mongodb, public static directories, etc.
+
+### What does 'socket-starter' return?
+
+Requiring this library returns a `function` you can `call` preferrably once.
+
+It spawns workers scaling to config values
 
 that takes in as only `argument` an `object` consisting of two fields:
 
@@ -117,7 +133,7 @@ see [config.json](https://github.com/Prozi/socket-starter/blob/master/config.jso
 
 To see complimentary RAW frontend of above chat (`index.html` - working)
 
-see [example/static/index.html](https://github.com/Prozi/socket-starter/blob/master/example/example/static/index.html)
+see [example/static/index.html](https://github.com/Prozi/socket-starter/blob/master/example/static/index.html)
 
 ----
 
@@ -129,16 +145,6 @@ this is the app's configuration, see that falls back if not supplied with `socke
 * Config can also have optional server instance as `config.server` or it will listen on `config.server = config.app.listen()`
 
 Also Check out `socket-starter/source/app` for more information about app instance...
-
-### plugins
-
-Core concept:
-
-the whole idea is that you can start few 'plugins' that are socket.io apps on single port
-this is thanks to handshake function that joins a specific room for that socket, 
-and that app 'plugin' has it's IO instance bound to this room. see source, you'll see what I mean.
-
-the config is a json for express, mongodb, public static directories, etc.
 
 ### defaults
 
