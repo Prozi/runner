@@ -21,7 +21,7 @@ async function createIO (config, socketStarterPlugins) {
   io.set('origins', '*:*')
 
   Object.keys(plugins).forEach((name) => {
-    plugins[name] && plugins[name].initialize(io.in(name))
+    plugins[name].initialize(io.in(name))
   })
 
   io.on('connect', (socket) => {

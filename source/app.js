@@ -20,7 +20,7 @@ function createCookieParser (config) {
 
 function testForMongoDB (config) {
   return new Promise((resolve, reject) => {
-    MongoClient.connect(config.mongoStore.url, (err) => {
+    MongoClient.connect(config.mongoStore.url, { useNewUrlParser: true }, (err) => {
       (err && reject(err)) || resolve()
     })
   })
