@@ -103,10 +103,10 @@ module.exports.default = plugin
 
 ----
 
-`config.json` defaults to this configuration:
+`config.js` defaults to this configuration:
 
 ```javascript
-{
+module.exports = {
   "port" process.env.PORT,
   "totalWorkers": 1,
   "sessionParams": {

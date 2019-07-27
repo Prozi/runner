@@ -1,7 +1,7 @@
 const cluster = require('cluster')
 const master = require('./master')
 const worker = require('./worker')
-const defaultConfig = require('../config.json')
+const defaultConfig = require('../config')
 
 function socketStarter (parameters) {
   const config = Object.assign(defaultConfig, parameters.config || {})

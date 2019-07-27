@@ -22,16 +22,15 @@ async function createIO (config, socketStarterPlugins) {
 
   Object.keys(plugins).forEach((name) => {
     plugins[name].initialize(io.in(name))
+    console.log(`socket-starter🚀 initialized plugin: ${name}`)
   })
 
   io.on('connect', (socket) => {
     // require custom handshake
     Object.keys(plugins).forEach((name) => {
       socket.on(`handshake:${name}`, (data) => {
-        if (plugins[name]) {
-          socket.join(name)
-          plugins[name].handshake(socket, data)
-        }
+        socket.join(name)
+        plugins[name].handshake(socket, data)
       })
     })
   })
