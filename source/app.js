@@ -7,6 +7,7 @@ const cors = require('cors')
 const compression = require('compression')
 const bodyParser = require('body-parser')
 const path = require('path')
+const logo = require('./name')
 
 // returns secret string password for sessions / cookies
 function getSecret (config) {
@@ -35,7 +36,7 @@ async function addMongoStore (config) {
       config.sessionParams.store = new Session(config.mongoStore)
     }
   } catch (err) {
-    console.warn(`socket-starter🚀 mongodb not configured, but that's ok`)
+    console.warn(`${logo} mongodb not configured, but that's ok`)
   }
 }
 

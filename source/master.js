@@ -1,6 +1,15 @@
 const net = require('net')
 const cluster = require('cluster')
 const farmhash = require('farmhash')
+const logo = require('./name')
+
+cluster.on('fork', (worker) => {
+  console.log(`${logo} worker: ${worker.id} spawned`)
+})
+
+cluster.on('exit', (worker, code, signal) => {
+  console.warn(`${logo} worker ${worker.process.pid} died\ncode:${code}\nsignal:${signal}`)
+})
 
 // This stores our workers. We need to keep them to be able to reference
 // them based on source IP address. It's also useful for auto-restart,
@@ -23,7 +32,7 @@ function spawnWorkers (config) {
     }
   }).listen(port)
 
-  console.log(`socket-starter🚀 started at port: ${port}`)
+  console.log(`${logo} started at port: ${port}`)
 
   // Spawn workers.
   for (let i = 0; i < config.totalWorkers; i++) {
@@ -47,23 +56,18 @@ function spawnWorkers (config) {
 
 /* eslint-disable no-inner-declarations */
 // Helper function for spawning worker at index 'i'.
-function spawnWorker (i, respawn) {
-  workers[i] = cluster.fork()
+function spawnWorker (i) {
+  const fork = cluster.fork()
 
   // Optional: Restart worker on exit
-  workers[i].on('exit', function (code, signal) {
-    spawnWorker(i, true)
+  fork.on('exit', (code, signal) => {
+    console.warn(`${logo} worker exit\ncode:${code}\nsignal:${signal}`)
+
+    spawnWorker(i)
   })
 
-  console[respawn ? 'warn' : 'log'](`socket-starter🚀 worker: ${i + 1} ${respawn ? 'respawned' : 'spawned'}`)
+  workers[i] = fork
 }
 
 module.exports = spawnWorkers
 module.exports.default = spawnWorkers
-
-cluster.on('exit', () => {
-  // kill the other workers
-  workers.forEach((worker) => worker.kill())
-  // exit the master process
-  process.exit(0)
-})

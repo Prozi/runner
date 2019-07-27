@@ -1,5 +1,6 @@
 const socketio = require('socket.io')
 const app = require('./app')
+const logo = require('./name')
 
 // Creates Socket IO instance on express app, with socket-starter plugins
 async function createIO (config, socketStarterPlugins) {
@@ -22,7 +23,7 @@ async function createIO (config, socketStarterPlugins) {
 
   Object.keys(plugins).forEach((name) => {
     plugins[name].initialize(io.in(name))
-    console.log(`socket-starter🚀 initialized plugin: ${name}`)
+    console.log(`${logo} initialized plugin: ${name}`)
   })
 
   io.on('connect', (socket) => {
