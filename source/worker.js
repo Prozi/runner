@@ -1,32 +1,29 @@
-const socketio = require('socket.io')
-const app = require('./app')
+const io = require('socket.io')
+const createApp = require('./app')
 const logo = require('./name')
 
-// Creates Socket IO instance on express app, with socket-starter plugins
-async function createIO (config, socketStarterPlugins) {
-  if (!config.app) config.app = await app(config)
+async function addExpress(config) {
+  if (!config.app) config.app = await createApp(config)
   if (!config.server) config.server = config.app.listen()
+}
 
-  const plugins = socketStarterPlugins || {}
-
+// Creates Socket IO instance on express app, with socket-starter plugins
+async function start (config, plugins = {}) {
+  
+  await addExpress(config)
+  
   // Note we don't use a port here because the master listens on it for us.
   // Don't expose our internal server to the outside.
-  const io = socketio(config.server)
+  const $io = io(config.server)
 
-  // Tell Socket.IO to use the redis adapter. By default, the redis
-  // server is assumed to be on localhost:6379. You don't have to
-  // specify them explicitly unless you want to change them.
-  // io.adapter(sio_redis(redis_uri))
-
-  // Allow connection = from any origin
-  io.set('origins', '*:*')
+  $io.set('origins', config.socket.origins)
 
   Object.keys(plugins).forEach((name) => {
-    plugins[name].initialize(io.in(name))
+    plugins[name].initialize($io.in(name))
     console.log(`${logo} initialized plugin: ${name}`)
   })
 
-  io.on('connect', (socket) => {
+  $io.on('connect', (socket) => {
     // require custom handshake
     Object.keys(plugins).forEach((name) => {
       socket.on(`handshake:${name}`, (data) => {
@@ -38,7 +35,7 @@ async function createIO (config, socketStarterPlugins) {
 
   // Listen to messages sent = from the master. Ignore everything else.
   process.on('message', (message, connection) => {
-    if (message === config.connectionMessage) {
+    if (message === config.socket.connectionMessage) {
       // Emulate a connection event on the server by emitting the
       // event with the connection the master sent us.
       config.server.emit('connection', connection)
@@ -50,4 +47,4 @@ async function createIO (config, socketStarterPlugins) {
   return config.server
 }
 
-module.exports = createIO
+module.exports = start

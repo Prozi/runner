@@ -1,6 +1,6 @@
 # Socket Starter
 
-Latest Express with Socket.IO and [optional] MongoDB Sticky-Session
+Latest Clustered Express with Socket.IO and [optional] MongoDB Sticky-Session
 
 [![npm version](https://badge.fury.io/js/socket-starter.svg)](https://badge.fury.io/js/socket-starter) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Prozi/socket-starter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Prozi/socket-starter/?branch=master) [![Known Vulnerabilities](https://snyk.io/test/github/Prozi/socket-starter/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Prozi/socket-starter?targetFile=package.json) [![Maintainability](https://api.codeclimate.com/v1/badges/cf7828e55f51edffbe3d/maintainability)](https://codeclimate.com/github/Prozi/socket-starter/maintainability)
 
@@ -53,10 +53,10 @@ $ yarn test
 
 `index.js` of example chat _minimum_ setup
 ```javascript
-const socketStarter = require('socket-starter')
+const start = require('socket-starter')
 const chat = require('socket-starter/source/chat')
 
-socketStarter({ plugins: { chat } })
+start({ plugins: { chat } })
 ```
 
 See similar: [example/index.js](https://github.com/Prozi/socket-starter/blob/master/example/index.js)
@@ -108,6 +108,10 @@ module.exports = plugin
 module.exports = {
   port: process.env.PORT || 8080,
   totalWorkers: process.env.WEB_CONCURRENCY || 1,
+  socket: {
+    origins: '*:*',
+    connectionMessage: 'sticky-session:connection'
+  },
   sessionParams:
   {
     key: 'socket-starter',
@@ -115,12 +119,13 @@ module.exports = {
     resave: true,
     saveUninitialized: true
   },
-  connectionMessage: 'sticky-session:connection',
   mongoStore: {
     url: process.env.MONGODB_URI || 'mongodb://localhost:27017/',
     collection: 'sessions'
   },
-  static: { directories: ['static'] }
+  static: {
+    directories: ['static']
+  }
 }
 ```
 
@@ -146,9 +151,9 @@ Also Check out `socket-starter/source/app` for more information about app instan
 ### defaults
 
 ```javascript
-  const app = require('socket-starter/source/app')
+  const createApp = require('socket-starter/source/app')
 
-  if (!config.app) config.app = await app(config)
+  if (!config.app) config.app = await createApp(config)
   if (!config.server) config.server = config.app.listen()
 ```
 

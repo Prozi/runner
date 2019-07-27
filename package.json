@@ -1,8 +1,8 @@
 {
   "name": "socket-starter",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "license": "MIT",
-  "description": "Latest Express with Socket.IO and [optional] MongoDB Sticky-Session",
+  "description": "Latest Clustered Express with Socket.IO and [optional] MongoDB Sticky-Session",
   "author": "Jacek Piętal <prozi85@gmail.com>",
   "private": false,
   "main": "source/index.js",

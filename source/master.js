@@ -16,11 +16,14 @@ cluster.on('exit', (worker, code, signal) => {
 // for example.
 const workers = []
 
-function spawnWorkers (config) {
-  const port = process.env.PORT || config.port
+function start(config) {
+  // Spawn workers.
+  for (let i = 0; i < config.totalWorkers; i++) {
+    spawnWorker(i)
+  }
 
   // Create the outside facing server listening on our port.
-  const server = net.createServer({
+  return net.createServer({
     pauseOnConnect: true
   }, function (connection) {
     // We received a connection and need to pass it to the appropriate
@@ -28,18 +31,9 @@ function spawnWorkers (config) {
     // it the connection.
     const worker = workers[getWorkerIndex(connection.remoteAddress)]
     if (worker) {
-      worker.send(config.connectionMessage, connection)
+      worker.send(config.socket.connectionMessage, connection)
     }
-  }).listen(port)
-
-  console.log(`${logo} started at port: ${port}`)
-
-  // Spawn workers.
-  for (let i = 0; i < config.totalWorkers; i++) {
-    spawnWorker(i)
-  }
-
-  return server
+  }).listen(config.port)
 
   // Helper function for getting a worker index based on IP address.
   // This is a hot path so it should be really fast. The way it works
@@ -56,7 +50,7 @@ function spawnWorkers (config) {
 
 /* eslint-disable no-inner-declarations */
 // Helper function for spawning worker at index 'i'.
-function spawnWorker (i) {
+function spawnWorker(i) {
   const fork = cluster.fork()
 
   // Optional: Restart worker on exit
@@ -69,4 +63,4 @@ function spawnWorker (i) {
   workers[i] = fork
 }
 
-module.exports = spawnWorkers
+module.exports = start

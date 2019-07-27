@@ -3,12 +3,13 @@ const master = require('./master')
 const worker = require('./worker')
 const defaultConfig = require('../config')
 
-function socketStarter (parameters) {
-  const config = Object.assign(defaultConfig, parameters.config || {})
+function start({ config, plugins }) {
+  const setup = Object.assign({}, defaultConfig, config || {})
+
   if (cluster.isMaster) {
-    return master(config)
+    return master(setup)
   }
-  return worker(config, parameters.plugins)
+  return worker(setup, plugins)
 }
 
-module.exports = socketStarter
+module.exports = start
