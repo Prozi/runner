@@ -23,7 +23,7 @@ function start(config) {
   }
 
   // Create the outside facing server listening on our port.
-  return net.createServer({
+  config.server = net.createServer({
     pauseOnConnect: true
   }, function (connection) {
     // We received a connection and need to pass it to the appropriate
@@ -34,6 +34,10 @@ function start(config) {
       worker.send(config.socket.connectionMessage, connection)
     }
   }).listen(config.port)
+
+  console.log(`${logo} started at port: ${config.port}`)
+
+  return config.server
 
   // Helper function for getting a worker index based on IP address.
   // This is a hot path so it should be really fast. The way it works
