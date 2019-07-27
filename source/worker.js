@@ -51,4 +51,3 @@ async function createIO (config, socketStarterPlugins) {
 }
 
 module.exports = createIO
-module.exports.default = createIO

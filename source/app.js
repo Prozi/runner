@@ -66,4 +66,3 @@ async function createApp (config) {
 }
 
 module.exports = createApp
-module.exports.default = createApp

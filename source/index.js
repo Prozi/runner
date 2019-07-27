@@ -12,4 +12,3 @@ function socketStarter (parameters) {
 }
 
 module.exports = socketStarter
-module.exports.default = socketStarter

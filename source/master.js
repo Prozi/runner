@@ -70,4 +70,3 @@ function spawnWorker (i) {
 }
 
 module.exports = spawnWorkers
-module.exports.default = spawnWorkers

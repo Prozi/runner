@@ -1,6 +1,6 @@
 {
   "name": "socket-starter",
-  "version": "1.16.3",
+  "version": "1.17.0",
   "license": "MIT",
   "description": "Latest Express with Socket.IO and [optional] MongoDB Sticky-Session",
   "author": "Jacek Piętal <prozi85@gmail.com>",
