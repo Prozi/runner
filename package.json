@@ -1,11 +1,11 @@
 {
   "name": "socket-starter",
-  "version": "1.16.2",
+  "version": "1.16.3",
   "license": "MIT",
   "description": "Latest Express with Socket.IO and [optional] MongoDB Sticky-Session",
   "author": "Jacek Piętal <prozi85@gmail.com>",
   "private": false,
-  "main": "index.js",
+  "main": "source/index.js",
   "scripts": {
     "test": "node example",
     "lint": "eslint source --fix"

@@ -30,7 +30,7 @@ that takes in as only `argument` an `object` consisting of two fields:
 
 ```javascript
 {
-  config: { /* see example/config.json */ },
+  config: { /* see example/config.js */ },
   plugins: {
     initialize (io) => {},
     handshake(socket, data) => {}
@@ -96,7 +96,6 @@ function panda (action, data, push = false) {
 }
 
 module.exports = plugin
-module.exports.default = plugin
 
 /* MUCH WOW SO EASY */
 ```
@@ -107,27 +106,25 @@ module.exports.default = plugin
 
 ```javascript
 module.exports = {
-  "port" process.env.PORT,
-  "totalWorkers": 1,
-  "sessionParams": {
-    "key": "prozi85",
-    "secret": "socket-starter",
-    "resave": true,
-    "saveUninitialized": true
+  port: process.env.PORT || 8080,
+  totalWorkers: process.env.WEB_CONCURRENCY || 1,
+  sessionParams:
+  {
+    key: 'socket-starter',
+    secret: 'TheCakeIsALie',
+    resave: true,
+    saveUninitialized: true
   },
-  "connectionMessage": "sticky-session:connection",
-  "mongoStore": {
-    "url": "mongodb://localhost:27017/",
-    "collection": "sessions"
+  connectionMessage: 'sticky-session:connection',
+  mongoStore: {
+    url: process.env.MONGODB_URI || 'mongodb://localhost:27017/',
+    collection: 'sessions'
   },
-  "static": {
-    "directories": ["static"]
-  }
+  static: { directories: ['static'] }
 }
-
 ```
 
-see [config.json](https://github.com/Prozi/socket-starter/blob/master/config.json)
+see [config.js](https://github.com/Prozi/socket-starter/blob/master/config.js)
 
 ----
 
@@ -139,7 +136,7 @@ see [example/static/index.html](https://github.com/Prozi/socket-starter/blob/mas
 
 ### config
 
-this is the app's configuration, see that falls back if not supplied with `socket-starter/config.json`
+this is the app's configuration, see that falls back if not supplied with `socket-starter/config.js`
 
 * Config can also have optional express app instance as `config.app = express()`
 * Config can also have optional server instance as `config.server` or it will listen on `config.server = config.app.listen()`
@@ -150,6 +147,7 @@ Also Check out `socket-starter/source/app` for more information about app instan
 
 ```javascript
   const app = require('socket-starter/source/app')
+
   if (!config.app) config.app = await app(config)
   if (!config.server) config.server = config.app.listen()
 ```

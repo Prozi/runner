@@ -1,16 +1,16 @@
 const os = require('os')
-const socketStarter = require('../index.js')
-const chat = require('./chat.js')
+const start = require('../source')
+const chat = require('./chat')
 
-socketStarter({
+start({
+  plugins: {
+    chat
+  },
   config: {
     totalWorkers: os.cpus().length,
     port: 3000,
     static: {
       directories: ['example/static']
     }
-  },
-  plugins: {
-    chat
   }
 })

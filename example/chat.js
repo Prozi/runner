@@ -26,6 +26,5 @@ function panda (action, data, push = false) {
 }
 
 module.exports = plugin
-module.exports.default = plugin
 
 /* MUCH WOW SO EASY */
