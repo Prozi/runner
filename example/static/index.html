@@ -27,7 +27,7 @@
   <script>
     (function () {
       var $ = document.querySelector.bind(document)
-      var socket = io('http://localhost:3000')
+      var socket = io('http://localhost:8080')
       socket.on('connect', function () {
         socket.emit('handshake:chat', {
           cookie: '🍪'

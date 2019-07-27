@@ -47,7 +47,7 @@ function start(config) {
   // Compared against "real" hashing (from the sticky-session code) and
   // "real" IP number conversion, this function is on par in terms of
   // worker index distribution only much faster.
-  function getWorkerIndex (ip) {
+  function getWorkerIndex(ip) {
     return farmhash.fingerprint32(ip) % config.totalWorkers // Farmhash is the fastest and works with IPv6, too
   }
 }

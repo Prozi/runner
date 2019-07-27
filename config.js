@@ -1,4 +1,7 @@
+const cluster = require('cluster')
+
 module.exports = {
+  isMaster: cluster.isMaster,
   port: process.env.PORT || 8080,
   totalWorkers: process.env.WEB_CONCURRENCY || 1,
   socket: {

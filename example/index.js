@@ -8,7 +8,6 @@ start({
   },
   config: {
     totalWorkers: os.cpus().length,
-    port: 3000,
     static: {
       directories: ['example/static']
     }
