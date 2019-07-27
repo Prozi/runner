@@ -34,6 +34,7 @@ async function addMongoStore (config) {
     if (await testForMongoDB(config)) {
       const Session = connectMongo(expressSession)
       config.sessionParams.store = new Session(config.mongoStore)
+      config.sessionParams.secret = getSecret()
     }
   } catch (err) {
     console.warn(`${logo} mongodb not configured, but that's ok`)
