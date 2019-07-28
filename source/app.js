@@ -58,9 +58,11 @@ async function createApp (config) {
     extended: false
   }))
 
-  config.static.directories.forEach((directory) => {
-    app.use(express.static(path.resolve(directory), config.static.config))
-  })
+  config.static.directories.forEach((directory) => app.use(
+    express.static(path.resolve(directory), config.static.config)
+  ))
+
+  console.log(`${logo} created express app instance`)
 
   return app
 }

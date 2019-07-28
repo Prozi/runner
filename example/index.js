@@ -1,13 +1,12 @@
-const os = require('os')
 const start = require('../source')
 const chat = require('./chat')
 
 start({
+  port: 3000,
   plugins: {
     chat
   },
   config: {
-    totalWorkers: os.cpus().length,
     static: {
       directories: ['example/static']
     }

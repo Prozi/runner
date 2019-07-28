@@ -3,68 +3,35 @@ const cluster = require('cluster')
 const farmhash = require('farmhash')
 const logo = require('./name')
 
-cluster.on('fork', (worker) => {
-  console.log(`${logo} worker: ${worker.id} spawned`)
-})
+function master(setup) {
 
-cluster.on('exit', (worker, code, signal) => {
-  console.warn(`${logo} worker ${worker.process.pid} died\ncode:${code}\nsignal:${signal}`)
-})
+  cluster.on('fork', (worker) => {
+    console.log(`${logo} worker: ${worker.id} spawned`)
+  })
 
-// This stores our workers. We need to keep them to be able to reference
-// them based on source IP address. It's also useful for auto-restart,
-// for example.
-const workers = []
-
-function start(config) {
   // Spawn workers.
-  for (let i = 0; i < config.totalWorkers; i++) {
-    spawnWorker(i)
-  }
+  setup.workers = new Array(setup.totalWorkers)
+    .fill(0)
+    .map(() => cluster.fork())
 
   // Create the outside facing server listening on our port.
-  config.server = net.createServer({
+  setup.master = net.createServer({
     pauseOnConnect: true
   }, function (connection) {
     // We received a connection and need to pass it to the appropriate
     // worker. Get the worker for this connection's source IP and pass
     // it the connection.
-    const worker = workers[getWorkerIndex(connection.remoteAddress)]
+    const worker = setup.workers[
+      farmhash.fingerprint32(connection.remoteAddress) % setup.workers.length
+    ]
     if (worker) {
-      worker.send(config.socket.connectionMessage, connection)
+      worker.send(setup.socket.connectionMessage, connection)
     }
-  }).listen(config.port)
+  }).listen(setup.port)
 
-  console.log(`${logo} started at port: ${config.port}`)
+  console.log(`${logo} started at port: ${setup.port}`)
 
-  return config.server
-
-  // Helper function for getting a worker index based on IP address.
-  // This is a hot path so it should be really fast. The way it works
-  // is by converting the IP address to a number by removing non numeric
-  // characters, then compressing it to the number of slots we have.
-  //
-  // Compared against "real" hashing (from the sticky-session code) and
-  // "real" IP number conversion, this function is on par in terms of
-  // worker index distribution only much faster.
-  function getWorkerIndex(ip) {
-    return farmhash.fingerprint32(ip) % config.totalWorkers // Farmhash is the fastest and works with IPv6, too
-  }
+  return setup
 }
 
-/* eslint-disable no-inner-declarations */
-// Helper function for spawning worker at index 'i'.
-function spawnWorker(i) {
-  const fork = cluster.fork()
-
-  // Optional: Restart worker on exit
-  fork.on('exit', (code, signal) => {
-    console.warn(`${logo} worker exit\ncode:${code}\nsignal:${signal}`)
-
-    spawnWorker(i)
-  })
-
-  workers[i] = fork
-}
-
-module.exports = start
+module.exports = master

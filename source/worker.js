@@ -1,25 +1,24 @@
 const io = require('socket.io')
-const createApp = require('./app')
 const logo = require('./name')
-
-async function addExpress(config) {
-  if (!config.app) config.app = await createApp(config)
-  if (!config.server) config.server = config.app.listen()
-}
+const createApp = require('./app')
 
 // Creates Socket IO instance on express app, with socket-starter plugins
-async function start (config, plugins = {}) {
-  
-  await addExpress(config)
-  
+async function start(setup = {}, plugins = {}) {
+
+  // Ensure we always have express instance at this point
+  // either provided by user in setup or we create one
+  await addExpress(setup)
+
   // Note we don't use a port here because the master listens on it for us.
   // Don't expose our internal server to the outside.
-  const $io = io(config.server)
+  const $io = io(setup.server)
 
-  $io.set('origins', config.socket.origins)
+  $io.set('origins', setup.socket.origins)
 
   Object.keys(plugins).forEach((name) => {
-    plugins[name].initialize($io.in(name))
+    plugins[name].initialize(
+      $io.in(name)
+    )
     console.log(`${logo} initialized plugin: ${name}`)
   })
 
@@ -35,16 +34,30 @@ async function start (config, plugins = {}) {
 
   // Listen to messages sent = from the master. Ignore everything else.
   process.on('message', (message, connection) => {
-    if (message === config.socket.connectionMessage) {
+    if (message === setup.socket.connectionMessage) {
+
       // Emulate a connection event on the server by emitting the
       // event with the connection the master sent us.
-      config.server.emit('connection', connection)
+      setup.server && setup.server.emit('connection', connection)
 
       connection.resume()
     }
   })
 
-  return config.server
+  return setup.server
+}
+
+// Helper function to ensure
+// we have express() instance at this point we call it
+async function addExpress(setup) {
+  if (!setup.app) {
+    setup.app = await createApp(setup)
+  }
+  if (!setup.server) {
+    setup.server = setup.app.listen(
+      setup.totalWorkers === 0 ? setup.port : null
+    )
+  }
 }
 
 module.exports = start
