@@ -32,8 +32,10 @@ that takes in as only `argument` an `object` consisting of two fields:
 {
   config: { /* see example/config.js */ },
   plugins: {
-    initialize (io) => {},
-    handshake(socket, data) => {}
+    handshakeKey: {
+      initialize (io) => {},
+      handshake(socket, data) => {}
+    }
   }
 }
 ```
