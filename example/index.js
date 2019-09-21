@@ -1,4 +1,4 @@
-const start = require('../source')
+const start = require('../lib')
 const chat = require('./chat')
 
 start({

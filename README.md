@@ -1,48 +1,81 @@
-# Socket Starter
+# Socket-Starter
 
-Latest Clustered Express with Socket.IO and [optional] MongoDB Sticky-Session
+Latest [optional] Clustered *Express with Socket.IO* and [optional] MongoDB Sticky-Session
 
 [![npm version](https://badge.fury.io/js/socket-starter.svg)](https://badge.fury.io/js/socket-starter) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Prozi/socket-starter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Prozi/socket-starter/?branch=master) [![Known Vulnerabilities](https://snyk.io/test/github/Prozi/socket-starter/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Prozi/socket-starter?targetFile=package.json) [![Maintainability](https://api.codeclimate.com/v1/badges/cf7828e55f51edffbe3d/maintainability)](https://codeclimate.com/github/Prozi/socket-starter/maintainability)
 
+## What's this?
+
+If you're only able to spawn one process and you'd like to have an `express` app with `static content serving`, 
+and at the same time spawn X number of scalable microservices that use `node` and can connect `websockets` (socket.io for performance).
+
+## Common use case
+
+* Single process app server like a free `heroku.com` account or similar
+* Build a chat
+* Make a node + javascript games
+
 ## Installation
 
-`yarn add socket-starter --save`
+It's hosted as an `npm` package so installation is of course as simple as:
 
-or if you're old school
+```bash
+yarn add socket-starter --save
+# you will also need socket.io-client for frontend
+# socket.io is auto-included
+```
 
-`npm install socket-starter --save`
+## The application:
 
-## Core concept:
-
-the whole idea is that you can start few 'plugins' that are socket.io apps on single port
-this is thanks to handshake function that joins a specific room for that socket, 
-and that app 'plugin' has it's IO instance bound to this room. see source, you'll see what I mean.
-
-the config is a json for express, mongodb, public static directories, etc.
-
-### What does 'socket-starter' return?
-
-Requiring this library returns a `function` you can `call` preferrably once.
-
-It spawns workers scaling to config values
-
-that takes in as only `argument` an `object` consisting of two fields:
+Node part you should do call the `socketStarter` (import socketStarter) function:
 
 ```javascript
-{
-  config: { /* see example/config.js */ },
-  plugins: {
-    handshakeKey: {
-      initialize (io) => {},
-      handshake(socket, data) => {}
-    }
-  }
+const socketStarter = require('socket-starter')
+
+const server = createServer()
+
+async function createServer() { 
+  return await socketStarter({
+    plugins: {
+      microService1: {
+        initialize (io) => {},
+        handshake(socket, data) => {
+          console.log('This should be foobar:', data)
+          socket.emit('messageFromMicroService1', 'payload1')
+        }
+      },
+      microService2: {
+        initialize (io) => {},
+        handshake(socket, data) => {
+          socket.emit('messageFromMicroService2', 'payload2')
+        }
+      }
+      // ... any number of plugins
+    },
+    // Customization information below
+    // Otherwise put static content inside root `static` directory
+  })
 }
 ```
 
-and returns a `express server instance`
+Frontend can use the above backend in this manner (javascript part):
 
-## Application (Chat) Example:
+```javascript
+const io = require('socket.io-client')
+
+const socket = io()
+
+socket.on('connect', function () {
+  ['messageFromMicroService1', 'messageFromMicroService2'].forEach(message => {
+    socket.on(message, (...args) => console.log(message, ...args))
+  })
+
+  socket.emit('handshake:microService1', 'foobar1')
+  socket.emit('handshake:microService2')
+})
+```
+
+## Full Application (Chat) Example:
 
 To run below example you can:
 
@@ -56,7 +89,7 @@ $ yarn test
 `index.js` of example chat _minimum_ setup
 ```javascript
 const start = require('socket-starter')
-const chat = require('socket-starter/source/chat')
+const chat = require('socket-starter/lib/chat')
 
 start({ plugins: { chat } })
 ```
@@ -66,7 +99,7 @@ See similar: [example/index.js](https://github.com/Prozi/socket-starter/blob/mas
 ----
 
 This is how to create a vanilla simple chat with this socket starter
-it is already included @ [socket-starter/source/chat](https://github.com/Prozi/socket-starter/blob/master/example/chat.js)
+it is already included @ [socket-starter/lib/chat](https://github.com/Prozi/socket-starter/blob/master/example/chat.js)
 
 
 ```javascript
@@ -104,7 +137,7 @@ module.exports = plugin
 
 ----
 
-`config.js` defaults to this configuration:
+You can provide the factory function with config key, which otherwise defaults to below configuration:
 
 ```javascript
 const cluster = require('cluster')
@@ -144,33 +177,40 @@ see [example/static/index.html](https://github.com/Prozi/socket-starter/blob/mas
 
 ----
 
-### config
+### Configuration/Customization
 
 this is the app's configuration, see that falls back if not supplied with `socket-starter/config.js`
 
 * Config can also have optional express app instance as `config.app = express()`
 * Config can also have optional server instance as `config.server` or it will listen on `config.server = config.app.listen()`
 
-Also Check out `socket-starter/source/app` for more information about app instance...
+Also Check out `socket-starter/lib/app` for more information about app instance...
 
-### defaults
+### Advanced
+
+You can further extend the `express` application by providing the `app` or `server` params.
+If they are not provided, they default to below:
 
 ```javascript
-  const createApp = require('socket-starter/source/app')
+  const createApp = require('socket-starter/lib/app')
 
   if (!config.app) config.app = await createApp(config)
   if (!config.server) config.server = config.app.listen()
 ```
 
-see [socket-starter/source/app](https://github.com/Prozi/socket-starter/blob/master/source/app.js)
+see [socket-starter/lib/app](https://github.com/Prozi/socket-starter/blob/master/lib/app.js)
 
 So you might supply your own app (express) / server instance
 or not listen on it immediately...
 
-### afterword
+### License
+
+MIT
+
+* Do what you want, fork, etc.
+* I am not responsible for any problem this free application causes :P
 
 have fun, please open any issues, etc.
 
 - Jacek Pietal
 
-LICENSE: MIT do what you want, fork, etc.
