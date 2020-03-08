@@ -1,6 +1,6 @@
 {
   "name": "socket-starter",
-  "version": "1.21.1",
+  "version": "1.22.0",
   "license": "MIT",
   "description": "Scalable Helper Package allowing multiple MicroServices, StaticServe, WebSockets",
   "author": "Jacek Piętal <prozi85@gmail.com>",
