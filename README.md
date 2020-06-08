@@ -1,6 +1,6 @@
 # Socket-Starter
 
-🚨 Deprecated in favor of [@jackepietal/bouncer.js](https://github.com/Prozi/bouncer.js).
+🚨 Deprecated in favor of [@jacekpietal/bouncer.js](https://github.com/Prozi/bouncer.js).
 
 🚨 For upgrade guide refer to [backwards-compatibility section of bouncer.js](https://github.com/Prozi/bouncer.js#backwards-compatibility)
 
