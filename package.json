@@ -11,12 +11,12 @@
     "lint": "eslint lib --fix"
   },
   "files": [
-    "./lib/*.*",
-    "./config.json",
-    "./example/*.*",
-    "./example/static/*.*",
-    "./README.md",
-    "./LICENSE"
+    "lib/*.*",
+    "config.json",
+    "example/*.*",
+    "example/static/*.*",
+    "README.md",
+    "LICENSE"
   ],
   "devDependencies": {
     "eslint": "^7.3.0",
