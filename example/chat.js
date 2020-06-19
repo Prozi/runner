@@ -11,7 +11,7 @@ const plugin = {
     this.socket.name = sillyname.randomAdjective()
     this.socket.on('sent', (data) => panda.call(this, 'sent', data, true))
     this.socket.on('disconnect', (data) => panda.call(this, 'left', data, true))
-    this.socket.emit('messages', { messages: this.messages, handshake })
+    this.socket.emit('messages', { messages: plugin.messages, handshake })
     panda.call(this, 'joined', handshake, true)
   }
 }
@@ -20,7 +20,7 @@ function panda (action, data, push = false) {
   const name = this.socket.name
   this.io.emit(action, { name, data })
   if (push) {
-    this.messages.push({ name, action, data })
+    plugin.messages.push({ name, action, data })
     console.log(`🐼 ${name} ${action} ${JSON.stringify(data, null, 2)}`)
   }
 }
