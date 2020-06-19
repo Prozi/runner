@@ -1,6 +1,6 @@
 {
   "name": "socket-starter",
-  "version": "1.22.5",
+  "version": "1.22.6",
   "license": "MIT",
   "description": "Scalable Helper Package allowing multiple MicroServices, StaticServe, WebSockets",
   "author": "Jacek Piętal <prozi85@gmail.com>",
@@ -11,10 +11,10 @@
     "lint": "eslint lib --fix"
   },
   "files": [
-    "lib/*.*",
+    "lib",
     "config.json",
-    "example/*.*",
-    "example/static/*.*",
+    "example",
+    "example/static",
     "README.md",
     "LICENSE"
   ],
